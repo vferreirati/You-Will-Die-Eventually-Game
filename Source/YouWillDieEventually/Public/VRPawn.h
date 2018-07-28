@@ -50,6 +50,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<class AWeapon> CharacterWeaponClass;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<class AFlashLight> CharacterFlashLightClass;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "Setup")
 	FName GripSocketName;
 
@@ -60,6 +63,8 @@ protected:
 	int32 CurrentAmmoCount;
 
 	class AWeapon* CharacterWeapon;
+
+	class AFlashLight* CharacterFlashLight;
 
 	bool bDied;
 

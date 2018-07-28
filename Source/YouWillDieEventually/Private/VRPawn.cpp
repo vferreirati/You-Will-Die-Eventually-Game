@@ -2,6 +2,7 @@
 
 #include "VRPawn.h"
 #include "Weapon.h"
+#include "FlashLight.h"
 #include "HealthComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
@@ -65,6 +66,13 @@ void AVRPawn::BeginPlay()
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		CharacterWeapon = GetWorld()->SpawnActor<AWeapon>(CharacterWeaponClass, SpawnParams);
 		CharacterWeapon->AttachToComponent(ControllerRightMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, GripSocketName);
+	}
+
+	if (CharacterFlashLightClass) {
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		CharacterFlashLight = GetWorld()->SpawnActor<AFlashLight>(CharacterFlashLightClass, SpawnParams);
+		CharacterFlashLight->AttachToComponent(ControllerLeftMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, GripSocketName);
 	}
 }
 
