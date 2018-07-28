@@ -15,11 +15,18 @@ public:
 	// Sets default values for this character's properties
 	AZombie();
 
-	bool bDied;
-
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UHealthComponent* HealthComp;
+
+	UPROPERTY(BlueprintReadOnly, Category = "AI")
+	bool bIsChasing;
+
+	UPROPERTY(BlueprintReadOnly, Category = "AI")
+	bool bDied;
+
+	UPROPERTY(BlueprintReadOnly, Category = "AI")
+	int32 RandomIndex;
 
 protected:	
 	// Called when the game starts or when spawned

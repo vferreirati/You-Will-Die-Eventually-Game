@@ -21,6 +21,8 @@ void AZombie::BeginPlay()
 	
 	HealthComp->OnHealthChanged.AddDynamic(this, &AZombie::HandleOnHealthChanged);	
 	bDied = false;
+	bIsChasing = false;
+	RandomIndex = FMath::RandRange(0, 2);
 }
 
 void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
