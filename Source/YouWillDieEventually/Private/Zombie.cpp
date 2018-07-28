@@ -26,13 +26,9 @@ void AZombie::BeginPlay()
 }
 
 void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
-	UE_LOG(LogTemp, Warning, TEXT("Took %s damage. Current Health is %s"), *FString::SanitizeFloat(AppliedDamage), *FString::SanitizeFloat(CurrentHealth));
 	if (bDied) { return; }
 	
 	if(CurrentHealth <= 0.f)  {
-
-		UE_LOG(LogTemp, Warning, TEXT("Zombie died!"));
-
 		// Died
 		bDied = true;
 

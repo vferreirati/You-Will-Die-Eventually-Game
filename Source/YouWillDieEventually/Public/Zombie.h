@@ -19,7 +19,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UHealthComponent* HealthComp;
 
-	UPROPERTY(BlueprintReadOnly, Category = "AI")
+	UPROPERTY(BlueprintReadWrite, Category = "AI")
 	bool bIsChasing;
 
 	UPROPERTY(BlueprintReadOnly, Category = "AI")
