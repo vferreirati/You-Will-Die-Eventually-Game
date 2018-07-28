@@ -43,12 +43,21 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UHealthComponent* HealthComp;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UWidgetComponent* AmmoCounterWidgetComp;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<class AWeapon> CharacterWeaponClass;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Setup")
 	FName GripSocketName;
+
+	// Amounts of bullets the player will start with
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 DefaultAmmoCount;
+
+	int32 CurrentAmmoCount;
 
 	class AWeapon* CharacterWeapon;
 
@@ -62,4 +71,7 @@ protected:
 
 	UFUNCTION()
 	void HandleOnHealthChanged(float CurrentHealth, float AppliedDamage);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "VRPawn")
+	void UpdateAmmoCountWidget(int32 CurrentAmmount);
 };

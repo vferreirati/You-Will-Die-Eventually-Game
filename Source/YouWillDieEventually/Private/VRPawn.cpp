@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/WidgetComponent.h"
 #include "MotionControllerComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 
@@ -41,7 +42,12 @@ AVRPawn::AVRPawn()
 	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComp"));
 	HealthComp->OnHealthChanged.AddDynamic(this, &AVRPawn::HandleOnHealthChanged);
 
+	AmmoCounterWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("AmmoCounterWidgetComp"));
+	AmmoCounterWidgetComp->SetupAttachment(ControllerRightMesh);
+
 	GripSocketName = "GripSocket";
+
+	DefaultAmmoCount = 15;
 }
 
 // Called when the game starts or when spawned
@@ -50,7 +56,9 @@ void AVRPawn::BeginPlay()
 	Super::BeginPlay();
 	
 	bDied = false;
-	
+	CurrentAmmoCount = DefaultAmmoCount;
+	UpdateAmmoCountWidget(CurrentAmmoCount);
+
 	UHeadMountedDisplayFunctionLibrary::SetTrackingOrigin(EHMDTrackingOrigin::Floor);
 	if (CharacterWeaponClass) {
 		FActorSpawnParameters SpawnParams;
@@ -76,9 +84,14 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void AVRPawn::Shoot() {
-	if (CharacterWeapon) {
+	if (CharacterWeapon && CurrentAmmoCount > 0) {
 		CharacterWeapon->Shoot();
+		
+		--CurrentAmmoCount;
+		UpdateAmmoCountWidget(CurrentAmmoCount);
 	}
+
+	// TODO: play empty mag sound when out of ammo.
 }
 
 void AVRPawn::HandleOnHealthChanged(float CurrentHealth, float DamageApplied) {
