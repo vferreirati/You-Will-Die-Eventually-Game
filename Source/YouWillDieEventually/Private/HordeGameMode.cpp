@@ -22,12 +22,10 @@ void AHordeGameMode::StartPlay() {
 void AHordeGameMode::PrepareForNextWave() {
 	// Start wave countdown
 	GetWorldTimerManager().SetTimer(TimerHandle_WaveStartingCountdown, this, &AHordeGameMode::StartWave, TimeBetweenWaves);
-	UE_LOG(LogTemp, Warning, TEXT("Preparing for next wave!"));
 }
 
 void AHordeGameMode::StartWave() {
 	// TODO: Play wave starting sound
-	UE_LOG(LogTemp, Warning, TEXT("Wave started!"));
 
 	// Update Wave Number
 	CurrentWaveNumber++;
@@ -35,7 +33,6 @@ void AHordeGameMode::StartWave() {
 
 	// Update Number of Enemies To Spawn
 	EnemiesToSpawn = NumberOfEnemiesInFirstWave + CurrentWaveNumber * EnemiesIncrementValue;
-	UE_LOG(LogTemp, Warning, TEXT("Number %s"), *FString::FromInt(EnemiesToSpawn));
 
 	// Start spawning enemies
 	GetWorldTimerManager().SetTimer(TimerHandle_SpawnEnemyDelay, this, &AHordeGameMode::SpawnEnemyTick, TimeBetweenSpawns, true, 0.f);
@@ -59,18 +56,15 @@ void AHordeGameMode::SpawnEnemyTick() {
 	
 	// Spawn a new enemy
 	SpawnEnemy();
-	UE_LOG(LogTemp, Warning, TEXT("Enemy spawned!"));
 }
 
 void AHordeGameMode::EndWave() {
 	GetWorldTimerManager().ClearTimer(TimerHandle_PollWaveState);
 
 	PrepareForNextWave();
-	UE_LOG(LogTemp, Warning, TEXT("Wave ended!"));
 }
 
 void AHordeGameMode::PollWaveState() {
-	UE_LOG(LogTemp, Warning, TEXT("Polling wave state!"));
 	// Check if there's any enemy left
 	TArray<AActor*> ZombiesArray;
 	UGameplayStatics::GetAllActorsOfClass(this, AZombie::StaticClass(), ZombiesArray);
