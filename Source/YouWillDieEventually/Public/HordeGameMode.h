@@ -19,6 +19,8 @@ public:
 
 	virtual void StartPlay() override;
 
+	void OnZombieDeath();
+
 protected:
 	// Amount of seconds of preparation between in game waves.
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
@@ -39,6 +41,8 @@ protected:
 	int32 CurrentWaveNumber;
 
 	int32 EnemiesToSpawn;
+
+	int32 CurrentPlayerScore;
 
 	FTimerHandle TimerHandle_WaveStartingCountdown;
 
@@ -69,6 +73,9 @@ protected:
 	// Updates the Score board with current wave number
 	UFUNCTION(BlueprintImplementableEvent, Category = "HordeGameMode")
 	void UpdateCurrentWaveNumber(int32 WaveNumber);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "HordeGameMode")
+	void UpdatePlayerScoreWidget(int32 CurrentPlayerScore);
 
 	void SupplyPlayer();
 };

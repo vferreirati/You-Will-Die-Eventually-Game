@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Zombie.h"
+#include "HordeGameMode.h"
 #include "HealthComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Gameframework/PawnMovementComponent.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 #include "YouWillDieEventually.h"
 
 // Sets default values
@@ -50,6 +52,8 @@ void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
 
 		// Timer to get removed from map
 		SetLifeSpan(5.f);
+
+		NotifyDeath();
 	}
 }
 
@@ -70,4 +74,11 @@ void AZombie::EndAttack() {
 
 void AZombie::Attack() {
 	UGameplayStatics::ApplyDamage(PlayerPawn, BaseDamage, GetInstigatorController(), this, nullptr);
+}
+
+void AZombie::NotifyDeath() {
+	AHordeGameMode* GM = Cast<AHordeGameMode>(GetWorld()->GetAuthGameMode());
+	if (GM) {
+		GM->OnZombieDeath();
+	}
 }

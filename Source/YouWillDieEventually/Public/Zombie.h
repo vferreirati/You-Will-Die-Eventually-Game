@@ -53,4 +53,7 @@ protected:
 	
 	UFUNCTION()
 	void HandleOnHealthChanged(float CurrentHealth, float AppliedDamage);
+
+	// Tells the gamemode a zombie died
+	void NotifyDeath();
 };

@@ -12,6 +12,7 @@ AHordeGameMode::AHordeGameMode() {
 	NumberOfEnemiesInFirstWave = 10;
 	EnemiesIncrementValue = 7;
 	CurrentWaveNumber = 0;
+	CurrentPlayerScore = 0;
 }
 
 void AHordeGameMode::StartPlay() {
@@ -83,4 +84,9 @@ void AHordeGameMode::SupplyPlayer() {
 		int32 AmmoAmount = NumberOfEnemiesInFirstWave + CurrentWaveNumber * EnemiesIncrementValue * 1.5;	// TODO: Validate this
 		PlayerPawn->ReceiveSupplies(AmmoAmount, 20.f);
 	}
+}
+
+void AHordeGameMode::OnZombieDeath() {
+	CurrentPlayerScore += 50;
+	UpdatePlayerScoreWidget(CurrentPlayerScore);
 }
