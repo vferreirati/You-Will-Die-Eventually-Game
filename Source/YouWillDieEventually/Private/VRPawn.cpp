@@ -46,6 +46,9 @@ AVRPawn::AVRPawn()
 	AmmoCounterWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("AmmoCounterWidgetComp"));
 	AmmoCounterWidgetComp->SetupAttachment(ControllerRightMesh);
 
+	HealthCounterWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthCounterWidgetComp"));
+	HealthCounterWidgetComp->SetupAttachment(ControllerRightMesh);
+
 	GripSocketName = "GripSocket";
 
 	DefaultAmmoCount = 15;
@@ -116,4 +119,7 @@ void AVRPawn::HandleOnHealthChanged(float CurrentHealth, float DamageApplied) {
 			CharacterWeapon->Destroy();
 		}
 	}
+
+	int32 Health = (int32)CurrentHealth;
+	UpdateHealthCountWidget(Health);
 }

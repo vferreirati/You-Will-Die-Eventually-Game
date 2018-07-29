@@ -47,6 +47,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class UWidgetComponent* AmmoCounterWidgetComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UWidgetComponent* HealthCounterWidgetComp;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<class AWeapon> CharacterWeaponClass;
 
@@ -79,4 +82,7 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "VRPawn")
 	void UpdateAmmoCountWidget(int32 CurrentAmmount);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "VRPawn")
+	void UpdateHealthCountWidget(int32 CurrentHealth);
 };
