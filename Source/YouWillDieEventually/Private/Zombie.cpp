@@ -14,6 +14,7 @@ AZombie::AZombie()
 	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComp"));
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(WEAPONCHANNEL, ECollisionResponse::ECR_Ignore);
+	BaseDamage = 10.f;
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +27,7 @@ void AZombie::BeginPlay()
 	bIsChasing = false;
 	bIsAttacking = false;
 	RandomIndex = FMath::RandRange(0, 2);
+	PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 }
 
 void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
@@ -36,6 +38,9 @@ void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
 		bDied = true;
 
 		GetMovementComponent()->StopMovementImmediately();
+
+		// Stop causing damage to player
+		EndAttack();
 
 		// Disable collision of his CapsuleComp
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -56,6 +61,13 @@ void AZombie::BeginAttack() {
 	GetWorldTimerManager().SetTimer(TimerHandle_AttackInterval, this, &AZombie::Attack, 1.f, true, 0.f);
 }
 
+void AZombie::EndAttack() {
+	if (!bIsAttacking) { return; }
+
+	bIsAttacking = false;
+	GetWorldTimerManager().ClearTimer(TimerHandle_AttackInterval);
+}
+
 void AZombie::Attack() {
-	// TODO: Apply damage to player.
+	UGameplayStatics::ApplyDamage(PlayerPawn, BaseDamage, GetInstigatorController(), this, nullptr);
 }

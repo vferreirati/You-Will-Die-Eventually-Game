@@ -31,7 +31,13 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Zombie")
 	int32 RandomIndex;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Zombie")
+	float BaseDamage;
+
 	FTimerHandle TimerHandle_AttackInterval;
+
+	class APawn* PlayerPawn;
+	
 
 protected:	
 	// Called when the game starts or when spawned
@@ -39,6 +45,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Zombie")
 	void BeginAttack();
+
+	void EndAttack();
 
 	UFUNCTION()
 	void Attack();
