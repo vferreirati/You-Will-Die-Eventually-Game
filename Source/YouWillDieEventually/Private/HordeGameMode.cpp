@@ -35,6 +35,7 @@ void AHordeGameMode::StartWave() {
 
 	// Update Number of Enemies To Spawn
 	EnemiesToSpawn = NumberOfEnemiesInFirstWave + CurrentWaveNumber * EnemiesIncrementValue;
+	UE_LOG(LogTemp, Warning, TEXT("Number %s"), *FString::FromInt(EnemiesToSpawn));
 
 	// Start spawning enemies
 	GetWorldTimerManager().SetTimer(TimerHandle_SpawnEnemyDelay, this, &AHordeGameMode::SpawnEnemyTick, TimeBetweenSpawns, true, 0.f);
@@ -48,6 +49,8 @@ void AHordeGameMode::SpawnEnemyTick() {
 		
 		// Start Polling Wave State
 		GetWorldTimerManager().SetTimer(TimerHandle_PollWaveState, this, &AHordeGameMode::PollWaveState, 1.f, true);
+
+		return;
 	}
 
 	// If there's enemies to spawn left
