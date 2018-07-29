@@ -4,6 +4,8 @@
 #include "HealthComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Gameframework/PawnMovementComponent.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "YouWillDieEventually.h"
 
 // Sets default values
@@ -22,6 +24,7 @@ void AZombie::BeginPlay()
 	HealthComp->OnHealthChanged.AddDynamic(this, &AZombie::HandleOnHealthChanged);	
 	bDied = false;
 	bIsChasing = false;
+	bIsAttacking = false;
 	RandomIndex = FMath::RandRange(0, 2);
 }
 
@@ -43,4 +46,16 @@ void AZombie::HandleOnHealthChanged(float CurrentHealth, float AppliedDamage) {
 		// Timer to get removed from map
 		SetLifeSpan(5.f);
 	}
+}
+
+void AZombie::BeginAttack() {
+	if (bIsAttacking) { return; }
+
+	bIsAttacking = true;
+
+	GetWorldTimerManager().SetTimer(TimerHandle_AttackInterval, this, &AZombie::Attack, 1.f, true, 0.f);
+}
+
+void AZombie::Attack() {
+	// TODO: Apply damage to player.
 }
