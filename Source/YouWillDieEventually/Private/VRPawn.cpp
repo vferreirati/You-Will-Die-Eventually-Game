@@ -124,3 +124,11 @@ void AVRPawn::HandleOnHealthChanged(float CurrentHealth, float DamageApplied) {
 	int32 Health = (int32)CurrentHealth;
 	UpdateHealthCountWidget(Health);
 }
+
+void AVRPawn::ReceiveSupplies(int32 AmmoToAdd, float HealthToAdd) {
+	CurrentAmmoCount += AmmoToAdd;
+	CurrentAmmoCount = FMath::Clamp(CurrentAmmoCount, 0, 100);
+
+	HealthComp->Heal(HealthToAdd);
+	UpdateAmmoCountWidget(CurrentAmmoCount);
+}

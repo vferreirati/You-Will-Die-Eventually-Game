@@ -2,6 +2,7 @@
 
 #include "HordeGameMode.h"
 #include "Zombie.h"
+#include "VRPawn.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -61,6 +62,7 @@ void AHordeGameMode::SpawnEnemyTick() {
 void AHordeGameMode::EndWave() {
 	GetWorldTimerManager().ClearTimer(TimerHandle_PollWaveState);
 
+	SupplyPlayer();
 	PrepareForNextWave();
 }
 
@@ -72,5 +74,13 @@ void AHordeGameMode::PollWaveState() {
 	// If all zombies are dead
 	if (ZombiesArray.Num() <= 0) {
 		EndWave();
+	}
+}
+
+void AHordeGameMode::SupplyPlayer() {
+	AVRPawn* PlayerPawn = Cast<AVRPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (PlayerPawn) {
+		int32 AmmoAmount = NumberOfEnemiesInFirstWave + CurrentWaveNumber * EnemiesIncrementValue * 1.5;	// TODO: Validate this
+		PlayerPawn->ReceiveSupplies(AmmoAmount, 20.f);
 	}
 }

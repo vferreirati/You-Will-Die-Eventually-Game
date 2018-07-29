@@ -33,3 +33,11 @@ void UHealthComponent::HandleOwnerTakeDamage(AActor* DamagedActor, float Damage,
 	// broadcast that the health value changed
 	OnHealthChanged.Broadcast(CurrentHealth, Damage);
 }
+
+void UHealthComponent::Heal(float AmountToHeal) {
+	CurrentHealth += AmountToHeal;
+
+	CurrentHealth = FMath::Clamp(CurrentHealth, 0.f, MaxHealth);
+
+	OnHealthChanged.Broadcast(CurrentHealth, 0.f);
+}

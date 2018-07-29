@@ -69,4 +69,6 @@ protected:
 	// Updates the Score board with current wave number
 	UFUNCTION(BlueprintImplementableEvent, Category = "HordeGameMode")
 	void UpdateCurrentWaveNumber(int32 WaveNumber);
+
+	void SupplyPlayer();
 };

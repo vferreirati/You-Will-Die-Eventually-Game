@@ -19,6 +19,8 @@ public:
 
 	FOnHealthChangedSignature OnHealthChanged;
 
+	void Heal(float AmountToHeal);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float MaxHealth;

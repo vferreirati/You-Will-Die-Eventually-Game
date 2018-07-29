@@ -21,6 +21,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void ReceiveSupplies(int32 AmmoAmount, float HealthAmount);
+
 protected:	
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
