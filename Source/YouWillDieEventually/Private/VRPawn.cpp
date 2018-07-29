@@ -117,6 +117,7 @@ void AVRPawn::HandleOnHealthChanged(float CurrentHealth, float DamageApplied) {
 		// Remove the weapon
 		if (CharacterWeapon) {
 			CharacterWeapon->Destroy();
+			CharacterWeapon = nullptr;
 		}
 	}
 
